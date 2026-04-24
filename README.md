@@ -5,7 +5,7 @@ Sportrip 的 Expo App MVP。這版先完成 Phase 1 骨幹，包含：
 - Expo SDK 52 + TypeScript + NativeWind + Expo Router v4
 - Design system 基底與核心 UI 元件
 - Supabase client / schema / seed
-- Email + 密碼登入註冊（Supabase Auth，未設 env 時自動 fallback demo mode）
+- Email + 密碼登入註冊（Supabase Auth，未設 env 時採 strict demo mode）
 - 5 個 Tab 主架構
 - 公會列表 / 詳情 / 加入
 - 活動列表 / 詳情 / 報名流程 mock
@@ -24,10 +24,11 @@ npm install
 npx expo start
 ```
 
-Web export:
+Web export / serve:
 
 ```bash
 npx expo export --platform web
+npm run web:serve
 ```
 
 其他驗證：
@@ -48,7 +49,7 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 
 ### demo mode
 
-如果沒設 Supabase env，app 仍可跑起來，會使用內建 demo data 與 demo auth，方便設計 review 與 QA smoke test。
+如果沒設 Supabase env，app 仍可跑起來，會使用內建 demo data 與 strict demo auth。demo mode 只接受 README / login 頁列出的測試帳號，密碼固定為 `password123`。
 
 ## Supabase 設定步驟
 
@@ -112,3 +113,16 @@ supabase/            # schema.sql / seed.sql
 - 公會主後台完整流程
 - 平台管理後台
 - 實名認證
+
+## Zeabur / Web 部署
+
+Web 版不能用純靜態 server 直接丟 `dist/`，因為 direct route 會 404。
+
+必須使用 SPA fallback server，例如：
+
+```bash
+npx expo export --platform web
+npx serve -s dist -l ${PORT:-3000}
+```
+
+如果用 Zeabur，請讓 build 階段跑 `npx expo export --platform web`，start 階段跑 `npm run web:serve`，或使用等效的 SPA rewrite / fallback 設定。

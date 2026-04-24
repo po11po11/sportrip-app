@@ -34,3 +34,20 @@
 - demo mode 為了讓 app 在未配置 Supabase 時也能跑，正式上線前要改以真實環境為主
 - Activity register 目前只有 mock CTA，尚未真的寫入 `event_registrations`
 - Wallet topup/history/withdraw 仍是 stub
+
+## QA 修正
+
+### 已修正
+- demo login 改為 strict mode，不再 fallback 到預設帳號
+- `public.users` 補 insert policy，並新增 `role` 欄位
+- `guild-admin` / `platform-admin` / `activity register` / `profile` 補 route guard
+- 新增 `web:serve`，Web deployment 改為 `serve -s dist` SPA fallback
+- `.gitignore` 補 `.env` / `.env.*` 忽略規則
+- 收斂 Badge / Button / Card radius 與顏色規則
+- 補 Button / Header / Input / TabBar / Card 基本 accessibility
+- 首頁與列表頁 icon 補上 onPress
+- wallet seed / demo transactions 餘額時序校正
+
+### 仍待後續
+- `serve -s dist` 是 Web production 必要條件，不能改回純靜態 server
+- Expo 55 升級與 audit 收斂需額外驗證，若相依炸裂要另開分支處理

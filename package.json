@@ -10,7 +10,10 @@
     "web": "expo start --web",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --ext .ts,.tsx",
-    "export:web": "npx expo export --platform web"
+    "export:web": "npx expo export --platform web",
+    "web:serve": "npx serve -s dist -l ${PORT:-3000}",
+    "export:ios": "npx expo export --platform ios",
+    "export:android": "npx expo export --platform android"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.4.1",
@@ -44,7 +47,8 @@
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^3.4.19",
     "zod": "^4.3.6",
-    "zustand": "^5.0.12"
+    "zustand": "^5.0.12",
+    "serve": "^14.2.4"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
