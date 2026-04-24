@@ -6,11 +6,14 @@ import { Header } from '@/components/ui/header'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { useActivity } from '@/lib/hooks/use-activities'
+import { useActivity, useActivityRegistration } from '@/lib/hooks/use-activities'
+import { useAuth } from '@/lib/hooks/use-auth'
 
 export default function ActivityDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>()
+  const { user } = useAuth()
   const activityQuery = useActivity(id)
+  const registrationQuery = useActivityRegistration(id, user?.id)
   const activity = activityQuery.data
 
   if (!activity) {
@@ -21,6 +24,8 @@ export default function ActivityDetailScreen() {
       </Screen>
     )
   }
+
+  const isRegistered = Boolean(registrationQuery.data)
 
   return (
     <Screen>
@@ -68,8 +73,8 @@ export default function ActivityDetailScreen() {
       </Card>
 
       <View className="pb-8">
-        <Button onPress={() => router.push(`/activity/${activity.id}/register`)}>
-          立即報名 {activity.price > 0 ? `NT$ ${activity.price}` : '免費'}
+        <Button disabled={isRegistered} onPress={() => router.push(`/activity/${activity.id}/register`)}>
+          {isRegistered ? '已報名' : `立即報名 ${activity.price > 0 ? `NT$ ${activity.price}` : '免費'}`}
         </Button>
       </View>
     </Screen>
