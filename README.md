@@ -66,7 +66,8 @@ EXPO_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
 - `/auth/login`、`/auth/register`
 - `/guild/[id]`
 - `/activity/[id]`
-- 其餘 `guild-admin`、`platform-admin`、`wallet/*`、`profile/*` 先保留 stub
+- 其餘 `guild-admin`、`wallet/*`、`profile/*` 先保留 stub
+- `platform-admin` 暫時只開放 Web，iOS / Android 不顯示入口且直接導向個人頁
 
 ## 專案結構
 
@@ -81,7 +82,8 @@ supabase/            # schema.sql / seed.sql
 
 - 活動報名付款目前為 mock
 - 錢包儲值與交易紀錄完整頁尚未完成
-- 公會主後台與平台後台目前為 stub
+- 公會主後台目前為 stub
+- 平台後台目前為 Web-only stub，原生 iOS / Android 不提供入口
 - onboarding / 通知 / 搜尋保留路由但未完成
 - 真正 production auth 建議補 email verification 與 password reset
 
@@ -111,7 +113,7 @@ supabase/            # schema.sql / seed.sql
 - 金流
 - 推播
 - 公會主後台完整流程
-- 平台管理後台
+- 平台管理後台原生流程（Web-only stub 先保留）
 - 實名認證
 
 ## Zeabur / Web 部署

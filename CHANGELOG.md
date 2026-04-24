@@ -41,6 +41,7 @@
 - demo login 改為 strict mode，不再 fallback 到預設帳號
 - `public.users` 補 insert policy，並新增 `role` 欄位
 - `guild-admin` / `platform-admin` / `activity register` / `profile` 補 route guard
+- `platform-admin` 改為 Web-only，iOS / Android 不顯示入口且直接導回個人頁
 - 新增 `web:serve`，Web deployment 改為 `serve -s dist` SPA fallback
 - `.gitignore` 補 `.env` / `.env.*` 忽略規則
 - 收斂 Badge / Button / Card radius 與顏色規則

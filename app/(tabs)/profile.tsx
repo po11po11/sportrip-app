@@ -1,6 +1,6 @@
 import { Redirect, router } from 'expo-router'
 import { ChevronRight, LogOut, ShieldCheck, UserCircle2 } from 'lucide-react-native'
-import { Pressable, Text, View } from 'react-native'
+import { Platform, Pressable, Text, View } from 'react-native'
 import { Screen } from '@/components/common/screen'
 import { Header } from '@/components/ui/header'
 import { Avatar } from '@/components/ui/avatar'
@@ -21,10 +21,11 @@ export default function ProfileScreen() {
   if (!initialized) return null
   if (!user) return <Redirect href="/auth/login" />
 
+  const isWeb = Platform.OS === 'web'
   const menu = [
     ...baseMenu,
     ...(user.role === 'guild_owner' ? [{ label: '公會主後台', href: '/guild-admin' }] : []),
-    ...(user.role === 'platform_admin' ? [{ label: '平台管理後台', href: '/platform-admin' }] : []),
+    ...(isWeb && user.role === 'platform_admin' ? [{ label: '平台管理後台', href: '/platform-admin' }] : []),
   ]
 
   return (
