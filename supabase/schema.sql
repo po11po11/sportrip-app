@@ -11,6 +11,7 @@ $$ language plpgsql;
 create table if not exists public.users (
   id uuid primary key references auth.users(id) on delete cascade,
   email text unique not null,
+  role text not null default 'member' check (role in ('member', 'guild_owner', 'platform_admin')),
   username text unique,
   name text,
   avatar_url text,
@@ -190,6 +191,7 @@ alter table public.referrals enable row level security;
 alter table public.user_interests enable row level security;
 
 create policy "users are publicly readable" on public.users for select using (true);
+create policy "users can insert self" on public.users for insert with check (auth.uid() = id);
 create policy "users can update self" on public.users for update using (auth.uid() = id);
 
 create policy "approved guilds are publicly readable" on public.guilds for select using (status = 'approved' or owner_id = auth.uid());

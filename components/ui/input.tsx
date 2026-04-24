@@ -12,6 +12,8 @@ type InputProps = {
   keyboardType?: 'default' | 'email-address'
   multiline?: boolean
   numberOfLines?: number
+  autoComplete?: 'email' | 'password' | 'name' | 'off'
+  textContentType?: 'emailAddress' | 'password' | 'name' | 'none'
 }
 
 export function Input({
@@ -25,6 +27,8 @@ export function Input({
   keyboardType = 'default',
   multiline,
   numberOfLines,
+  autoComplete = 'off',
+  textContentType = 'none',
 }: InputProps) {
   return (
     <View className="gap-2">
@@ -37,15 +41,18 @@ export function Input({
         secureTextEntry={secureTextEntry}
         keyboardType={keyboardType}
         autoCapitalize="none"
+        accessibilityLabel={label}
+        autoComplete={autoComplete}
+        textContentType={textContentType}
         multiline={multiline}
         numberOfLines={numberOfLines}
         className={cn(
-          'rounded border bg-white px-4 py-3 text-base text-black dark:bg-grey-900 dark:text-white',
-          error ? 'border-error' : 'border-grey-200 dark:border-grey-700',
+          'rounded-lg border bg-white px-4 py-3 text-base text-black dark:bg-grey-900 dark:text-white',
+          error ? 'border-accent-600' : 'border-grey-200 dark:border-grey-700',
           multiline && 'min-h-28 text-base align-top'
         )}
       />
-      {error ? <Text className="text-sm text-error">{error}</Text> : helperText ? <Text className="text-sm text-grey-500">{helperText}</Text> : null}
+      {error ? <Text className="text-sm text-accent-700">{error}</Text> : helperText ? <Text className="text-sm text-grey-500">{helperText}</Text> : null}
     </View>
   )
 }

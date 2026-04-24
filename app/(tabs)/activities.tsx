@@ -32,7 +32,7 @@ export default function ActivitiesScreen() {
         title="活動"
         rightSlot={
           <>
-            <Pressable className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
+            <Pressable onPress={() => router.push('/search')} accessibilityRole="button" accessibilityLabel="篩選活動" className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
               <SlidersHorizontal size={20} color="#171717" />
             </Pressable>
             <Pressable onPress={() => router.push('/search')} className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">

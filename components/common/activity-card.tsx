@@ -15,10 +15,10 @@ function formatDate(value: string) {
 }
 
 export function ActivityCard({ activity, onPress }: { activity: Activity; onPress?: () => void }) {
-  const statusVariant = activity.status === 'open' ? 'success' : activity.status === 'full' ? 'warning' : 'default'
+  const statusVariant = activity.status === 'open' ? 'accent' : 'grey'
 
   return (
-    <Card onPress={onPress} className="gap-3">
+    <Card onPress={onPress} className="gap-3" accessibilityLabel={activity.title}>
       <View className="flex-row items-center justify-between">
         <Text className="text-sm font-medium text-grey-500 dark:text-grey-400">{formatDate(activity.start_time)}</Text>
         <Badge label={activity.status === 'open' ? '報名中' : activity.status === 'full' ? '已額滿' : activity.status} variant={statusVariant} />

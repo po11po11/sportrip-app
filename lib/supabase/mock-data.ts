@@ -10,6 +10,7 @@ export const demoUsers: UserProfile[] = [
     phone: '0912-345-678',
     bio: '晨跑與越野愛好者',
     level: 12,
+    role: 'guild_owner',
     verified: true,
   },
   {
@@ -20,6 +21,7 @@ export const demoUsers: UserProfile[] = [
     avatar_url: null,
     bio: '單車與瑜珈雙修',
     level: 7,
+    role: 'platform_admin',
     verified: true,
   },
   {
@@ -30,6 +32,7 @@ export const demoUsers: UserProfile[] = [
     avatar_url: null,
     bio: 'Cross training 與社群經營',
     level: 9,
+    role: 'guild_owner',
     verified: false,
   },
 ]
@@ -196,30 +199,30 @@ export const demoWallet: Wallet = {
 
 export const demoTransactions: WalletTransaction[] = [
   {
-    id: 't1111111-1111-1111-1111-111111111111',
+    id: 't3333333-3333-3333-3333-333333333333',
     wallet_id: demoWallet.id,
-    type: 'payment',
-    amount: -100,
-    balance_after: 500,
-    description: '報名：陽明山晨跑 10K',
-    created_at: '2026-04-24T15:30:00+08:00',
+    type: 'reward',
+    amount: 50,
+    balance_after: 50,
+    description: '推薦獎勵：@alice',
+    created_at: '2026-04-20T18:45:00+08:00',
   },
   {
     id: 't2222222-2222-2222-2222-222222222222',
     wallet_id: demoWallet.id,
     type: 'topup',
     amount: 500,
-    balance_after: 600,
+    balance_after: 550,
     description: '儲值',
     created_at: '2026-04-23T10:00:00+08:00',
   },
   {
-    id: 't3333333-3333-3333-3333-333333333333',
+    id: 't1111111-1111-1111-1111-111111111111',
     wallet_id: demoWallet.id,
-    type: 'reward',
-    amount: 50,
-    balance_after: 100,
-    description: '推薦獎勵：@alice',
-    created_at: '2026-04-20T18:45:00+08:00',
+    type: 'payment',
+    amount: -50,
+    balance_after: 500,
+    description: '報名：陽明山晨跑 10K 訂金',
+    created_at: '2026-04-24T15:30:00+08:00',
   },
 ]

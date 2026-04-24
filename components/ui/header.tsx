@@ -18,14 +18,14 @@ export function Header({ title, subtitle, leftSlot, rightSlot, showBack }: Heade
     <View className="flex-row items-center justify-between py-2">
       <View className="flex-row items-center gap-3 flex-1">
         {showBack ? (
-          <Pressable onPress={() => router.back()} className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
+          <Pressable onPress={() => router.back()} accessibilityRole="button" accessibilityLabel="返回上一頁" className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
             <ChevronLeft size={20} color="#171717" />
           </Pressable>
         ) : leftSlot ? (
           leftSlot
         ) : null}
         <View className="flex-1">
-          <Text className="text-2xl font-semibold text-black dark:text-white">{title}</Text>
+          <Text accessibilityRole="header" className="text-2xl font-semibold text-black dark:text-white">{title}</Text>
           {subtitle ? <Text className="text-sm text-grey-500 dark:text-grey-400">{subtitle}</Text> : null}
         </View>
       </View>

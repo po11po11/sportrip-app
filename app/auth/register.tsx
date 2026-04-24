@@ -48,12 +48,12 @@ export default function RegisterScreen() {
             <Input label="名稱" value={field.value} onChangeText={field.onChange} error={errors.name?.message} />
           )} />
           <Controller control={control} name="email" render={({ field }) => (
-            <Input label="Email" value={field.value} onChangeText={field.onChange} error={errors.email?.message} keyboardType="email-address" />
+            <Input label="Email" value={field.value} onChangeText={field.onChange} error={errors.email?.message} keyboardType="email-address" autoComplete="email" textContentType="emailAddress" />
           )} />
           <Controller control={control} name="password" render={({ field }) => (
-            <Input label="密碼" value={field.value} onChangeText={field.onChange} error={errors.password?.message} secureTextEntry />
+            <Input label="密碼" value={field.value} onChangeText={field.onChange} error={errors.password?.message} secureTextEntry textContentType="password" autoComplete="password" />
           )} />
-          {error ? <Text className="text-sm text-error">{error}</Text> : null}
+          {error ? <Text className="text-sm text-accent-700">{error}</Text> : null}
           <Button onPress={onSubmit} loading={loading}>註冊</Button>
         </View>
       </Card>

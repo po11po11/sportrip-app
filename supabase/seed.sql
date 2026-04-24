@@ -2,11 +2,11 @@
 -- 1. Create three auth users in Supabase Auth with the IDs below, or replace IDs with real auth.users IDs.
 -- 2. Run supabase/schema.sql first.
 
-insert into public.users (id, email, username, name, phone, bio, level, verified, verified_at)
+insert into public.users (id, email, role, username, name, phone, bio, level, verified, verified_at)
 values
-  ('11111111-1111-1111-1111-111111111111', 'tom@sportrip.app', 'runner_tom', 'Tom 林', '0912-345-678', '晨跑與越野愛好者', 12, true, now()),
-  ('22222222-2222-2222-2222-222222222222', 'alice@sportrip.app', 'cycle_alice', 'Alice 王', '0922-111-222', '單車與瑜珈雙修', 7, true, now()),
-  ('33333333-3333-3333-3333-333333333333', 'kevin@sportrip.app', 'fit_kevin', 'Kevin 陳', '0933-333-444', 'Cross training 與社群經營', 9, false, null)
+  ('11111111-1111-1111-1111-111111111111', 'tom@sportrip.app', 'guild_owner', 'runner_tom', 'Tom 林', '0912-345-678', '晨跑與越野愛好者', 12, true, now()),
+  ('22222222-2222-2222-2222-222222222222', 'alice@sportrip.app', 'platform_admin', 'cycle_alice', 'Alice 王', '0922-111-222', '單車與瑜珈雙修', 7, true, now()),
+  ('33333333-3333-3333-3333-333333333333', 'kevin@sportrip.app', 'guild_owner', 'fit_kevin', 'Kevin 陳', '0933-333-444', 'Cross training 與社群經營', 9, false, null)
 on conflict (id) do nothing;
 
 insert into public.guilds (id, owner_id, name, slug, description, cover_image, location, member_count, rating, review_count, status)
@@ -69,11 +69,11 @@ values
   ('w3333333-3333-3333-3333-333333333333', '33333333-3333-3333-3333-333333333333', 150)
 on conflict (id) do nothing;
 
-insert into public.wallet_transactions (wallet_id, type, amount, balance_after, description)
+insert into public.wallet_transactions (wallet_id, type, amount, balance_after, description, created_at)
 values
-  ('w1111111-1111-1111-1111-111111111111', 'payment', -100, 500, '報名：陽明山晨跑 10K'),
-  ('w1111111-1111-1111-1111-111111111111', 'topup', 500, 600, '儲值'),
-  ('w1111111-1111-1111-1111-111111111111', 'reward', 50, 100, '推薦獎勵：@alice')
+  ('w1111111-1111-1111-1111-111111111111', 'reward', 50, 50, '推薦獎勵：@alice', '2026-04-20 18:45:00+08'),
+  ('w1111111-1111-1111-1111-111111111111', 'topup', 500, 550, '儲值', '2026-04-23 10:00:00+08'),
+  ('w1111111-1111-1111-1111-111111111111', 'payment', -50, 500, '報名：陽明山晨跑 10K 訂金', '2026-04-24 15:30:00+08')
 on conflict do nothing;
 
 insert into public.achievements (user_id, badge_type)

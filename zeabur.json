@@ -1,0 +1,8 @@
+{
+  "build": {
+    "command": "npx expo export --platform web"
+  },
+  "start": {
+    "command": "npm run web:serve"
+  }
+}
