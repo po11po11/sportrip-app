@@ -66,6 +66,16 @@ export interface Activity {
   registration_count?: number
 }
 
+export interface ActivityRegistration {
+  id: string
+  event_id: string
+  user_id: string
+  status: 'confirmed' | 'cancelled' | 'attended' | 'no_show'
+  payment_status: 'pending' | 'paid' | 'refunded'
+  paid_amount?: number | null
+  registered_at?: string
+}
+
 export interface Wallet {
   id: string
   user_id: string

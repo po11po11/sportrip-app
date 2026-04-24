@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { getActivities, getActivityById } from '@/lib/supabase/services'
+import { getActivities, getActivityById, getActivityRegistration } from '@/lib/supabase/services'
 
 export function useActivities() {
   return useQuery({
@@ -13,5 +13,13 @@ export function useActivity(id: string) {
     queryKey: ['activity', id],
     queryFn: () => getActivityById(id),
     enabled: Boolean(id),
+  })
+}
+
+export function useActivityRegistration(activityId?: string, userId?: string) {
+  return useQuery({
+    queryKey: ['activity-registration', activityId, userId],
+    queryFn: () => getActivityRegistration(activityId!, userId!),
+    enabled: Boolean(activityId && userId),
   })
 }

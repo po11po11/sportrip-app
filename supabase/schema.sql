@@ -120,6 +120,112 @@ create table if not exists public.wallet_transactions (
 create index if not exists idx_wallet_transactions_wallet on public.wallet_transactions(wallet_id);
 create index if not exists idx_wallet_transactions_type on public.wallet_transactions(type);
 
+create or replace function public.register_for_event(p_event_id uuid)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_user_id uuid := auth.uid();
+  v_event public.events%rowtype;
+  v_wallet public.wallets%rowtype;
+  v_registration public.event_registrations%rowtype;
+  v_price numeric(10,2);
+  v_new_balance numeric(10,2);
+  v_registration_count int;
+begin
+  if v_user_id is null then
+    raise exception 'UNAUTHORIZED';
+  end if;
+
+  select * into v_event
+  from public.events
+  where id = p_event_id
+    and status in ('open', 'full')
+  for update;
+
+  if not found then
+    raise exception 'EVENT_NOT_FOUND';
+  end if;
+
+  if v_event.registration_deadline is not null and v_event.registration_deadline < now() then
+    raise exception 'REGISTRATION_CLOSED';
+  end if;
+
+  select * into v_registration
+  from public.event_registrations
+  where event_id = p_event_id and user_id = v_user_id;
+
+  if found then
+    raise exception 'ALREADY_REGISTERED';
+  end if;
+
+  select count(*) into v_registration_count
+  from public.event_registrations
+  where event_id = p_event_id and status = 'confirmed';
+
+  if v_registration_count >= v_event.max_participants then
+    update public.events set status = 'full' where id = p_event_id;
+    raise exception 'EVENT_FULL';
+  end if;
+
+  select * into v_wallet
+  from public.wallets
+  where user_id = v_user_id
+  for update;
+
+  if not found then
+    insert into public.wallets (user_id, balance)
+    values (v_user_id, 0)
+    returning * into v_wallet;
+  end if;
+
+  v_price := coalesce(v_event.price, 0);
+  if coalesce(v_wallet.balance, 0) < v_price then
+    raise exception 'INSUFFICIENT_BALANCE';
+  end if;
+
+  v_new_balance := coalesce(v_wallet.balance, 0) - v_price;
+
+  update public.wallets
+  set balance = v_new_balance
+  where id = v_wallet.id;
+
+  -- MVP: schema does not define a pending_payment registration status, so registrations are created as confirmed immediately.
+  insert into public.event_registrations (event_id, user_id, status, payment_status, paid_amount)
+  values (p_event_id, v_user_id, 'confirmed', 'paid', v_price)
+  returning * into v_registration;
+
+  insert into public.wallet_transactions (wallet_id, type, amount, balance_after, description, reference_id)
+  values (
+    v_wallet.id,
+    'payment',
+    -v_price,
+    v_new_balance,
+    concat('報名：', v_event.title),
+    v_registration.id
+  );
+
+  select count(*) into v_registration_count
+  from public.event_registrations
+  where event_id = p_event_id and status = 'confirmed';
+
+  update public.events
+  set status = case when v_registration_count >= v_event.max_participants then 'full' else 'open' end
+  where id = p_event_id;
+
+  return jsonb_build_object(
+    'registration_id', v_registration.id,
+    'registration_count', v_registration_count,
+    'balance_after', v_new_balance,
+    'event_status', case when v_registration_count >= v_event.max_participants then 'full' else 'open' end
+  );
+end;
+$$;
+
+grant execute on function public.register_for_event(uuid) to authenticated;
+
 create table if not exists public.achievements (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.users(id) on delete cascade,
