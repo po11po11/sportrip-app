@@ -4,6 +4,8 @@ import { demoActivities, demoGuilds, demoTransactions, demoUsers, demoWallet } f
 import { supabase } from './client'
 import { hasSupabaseEnv } from './env'
 
+const DEMO_PASSWORD = 'password123'
+
 function ensureSupabase() {
   if (!supabase) {
     throw new Error('Supabase env 尚未設定，目前為 demo mode')
@@ -13,7 +15,9 @@ function ensureSupabase() {
 
 export async function signInWithEmail(email: string, password: string) {
   if (!hasSupabaseEnv) {
-    const user = demoUsers.find((item) => item.email === email) ?? demoUsers[0]
+    const user = demoUsers.find((item) => item.email === email)
+    if (!user) throw new Error('Demo 帳號不存在')
+    if (password !== DEMO_PASSWORD) throw new Error('Demo 密碼錯誤，請使用指定測試帳號')
     return { session: { user } as unknown as Session, profile: user, isDemo: true }
   }
 
@@ -31,6 +35,7 @@ export async function signUpWithEmail(email: string, password: string, name: str
       id: `demo-${Date.now()}`,
       email,
       name,
+      role: 'member',
       username: email.split('@')[0],
       verified: false,
       level: 1,
@@ -53,6 +58,7 @@ export async function signUpWithEmail(email: string, password: string, name: str
       id: data.user.id,
       email,
       name,
+      role: 'member',
       username: email.split('@')[0],
     })
   }

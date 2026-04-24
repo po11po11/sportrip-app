@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/card'
 import { Divider } from '@/components/ui/divider'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/lib/hooks/use-auth'
+import { demoUsers } from '@/lib/supabase/mock-data'
 
 const loginSchema = z.object({
   email: z.string().email('Email 格式不正確'),
@@ -46,14 +47,22 @@ export default function LoginScreen() {
       <Card>
         <View className="gap-4">
           <Controller control={control} name="email" render={({ field }) => (
-            <Input label="Email" value={field.value} onChangeText={field.onChange} error={errors.email?.message} keyboardType="email-address" />
+            <Input label="Email" value={field.value} onChangeText={field.onChange} error={errors.email?.message} keyboardType="email-address" autoComplete="email" textContentType="emailAddress" />
           )} />
           <Controller control={control} name="password" render={({ field }) => (
-            <Input label="密碼" value={field.value} onChangeText={field.onChange} error={errors.password?.message} secureTextEntry />
+            <Input label="密碼" value={field.value} onChangeText={field.onChange} error={errors.password?.message} secureTextEntry textContentType="password" autoComplete="password" />
           )} />
-          {error ? <Text className="text-sm text-error">{error}</Text> : null}
-          {isDemoMode ? <Text className="text-sm text-accent-600">目前使用 demo auth，可直接登入預設帳號。</Text> : null}
-          <Button onPress={onSubmit} loading={loading}>登入</Button>
+          {error ? <Text className="text-sm text-accent-700">{error}</Text> : null}
+          {isDemoMode ? (
+            <View className="gap-2 rounded-xl bg-grey-100 p-3 dark:bg-grey-800">
+              <Text className="text-sm font-medium text-black dark:text-white">目前使用 demo auth，僅接受以下帳號</Text>
+              {demoUsers.map((item) => (
+                <Text key={item.id} className="text-sm text-grey-600 dark:text-grey-300">• {item.email} ({item.role === 'platform_admin' ? 'platform admin' : item.role === 'guild_owner' ? 'guild owner' : 'member'})</Text>
+              ))}
+              <Text className="text-sm text-accent-600">demo 密碼：password123</Text>
+            </View>
+          ) : null}
+          <Button onPress={onSubmit}>登入</Button>
         </View>
       </Card>
 
