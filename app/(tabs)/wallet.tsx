@@ -27,7 +27,7 @@ export default function WalletScreen() {
     <Screen>
       <Header
         title="錢包"
-        rightSlot={<Pressable className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900"><Ellipsis size={20} color="#171717" /></Pressable>}
+        rightSlot={<Pressable onPress={() => router.push('/wallet/history')} accessibilityRole="button" accessibilityLabel="查看交易紀錄" className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900"><Ellipsis size={20} color="#171717" /></Pressable>}
       />
 
       <Card className="bg-grey-900 dark:bg-grey-900">
@@ -48,7 +48,7 @@ export default function WalletScreen() {
             <Text className="text-lg font-semibold text-black dark:text-white">推薦獎勵</Text>
           </View>
           <Text className="text-sm leading-6 text-grey-600 dark:text-grey-400">推薦 1 位好友首次報名，你和好友各得 50 點數。這版先以靜態規則顯示，後續接 referral backend。</Text>
-          <Button variant="outline" onPress={() => {}}>邀請好友（mock）</Button>
+          <Button variant="outline" color="secondary" onPress={() => {}}>邀請好友（mock）</Button>
         </View>
       </Card>
 
@@ -66,7 +66,7 @@ export default function WalletScreen() {
                   <Text className="mt-1 text-base font-medium text-black dark:text-white">{transaction.description}</Text>
                 </View>
               </View>
-              <Text className={`text-sm font-semibold ${transaction.amount >= 0 ? 'text-success' : 'text-black dark:text-white'}`}>
+              <Text className={`text-sm font-semibold ${transaction.amount >= 0 ? 'text-accent-600' : 'text-black dark:text-white'}`}>
                 {transaction.amount >= 0 ? '+' : '-'} NT$ {Math.abs(transaction.amount)}
               </Text>
             </View>

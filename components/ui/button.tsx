@@ -5,12 +5,13 @@ type ButtonProps = {
   children?: React.ReactNode
   onPress: () => void
   variant?: 'solid' | 'outline' | 'ghost'
-  color?: 'primary' | 'secondary' | 'destructive'
+  color?: 'primary' | 'secondary'
   size?: 'small' | 'medium' | 'large'
   disabled?: boolean
   loading?: boolean
   fullWidth?: boolean
   icon?: React.ReactNode
+  accessibilityLabel?: string
 }
 
 const sizeMap = {
@@ -23,17 +24,14 @@ const variantMap = {
   solid: {
     primary: 'bg-accent-600 active:bg-accent-700',
     secondary: 'bg-grey-900 active:bg-grey-800 dark:bg-white dark:active:bg-grey-100',
-    destructive: 'bg-error active:opacity-90',
   },
   outline: {
     primary: 'border border-accent-600 bg-transparent',
     secondary: 'border border-grey-300 bg-transparent dark:border-grey-700',
-    destructive: 'border border-error bg-transparent',
   },
   ghost: {
     primary: 'bg-transparent',
     secondary: 'bg-transparent',
-    destructive: 'bg-transparent',
   },
 } as const
 
@@ -41,17 +39,14 @@ const textMap = {
   solid: {
     primary: 'text-white',
     secondary: 'text-white dark:text-black',
-    destructive: 'text-white',
   },
   outline: {
     primary: 'text-accent-600',
     secondary: 'text-grey-700 dark:text-grey-200',
-    destructive: 'text-error',
   },
   ghost: {
     primary: 'text-accent-600',
     secondary: 'text-grey-700 dark:text-grey-200',
-    destructive: 'text-error',
   },
 } as const
 
@@ -65,13 +60,18 @@ export function Button({
   loading,
   fullWidth = true,
   icon,
+  accessibilityLabel,
 }: ButtonProps) {
+  const derivedLabel = accessibilityLabel ?? (typeof children === 'string' ? children : undefined)
+
   return (
     <Pressable
       disabled={disabled || loading}
       onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={derivedLabel}
       className={cn(
-        'items-center justify-center rounded flex-row gap-2',
+        'items-center justify-center rounded-lg flex-row gap-2',
         sizeMap[size],
         variantMap[variant][color],
         fullWidth && 'w-full',

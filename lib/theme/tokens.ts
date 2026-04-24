@@ -25,8 +25,9 @@ export const colors = {
     800: '#9A3412',
     900: '#7C2D12',
   },
-  success: '#10B981',
-  warning: '#F59E0B',
-  error: '#EF4444',
-  info: '#3B82F6',
+} as const
+
+export const radii = {
+  button: 8,
+  card: 12,
 } as const

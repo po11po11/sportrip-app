@@ -62,7 +62,7 @@ export default function LoginScreen() {
               <Text className="text-sm text-accent-600">demo 密碼：password123</Text>
             </View>
           ) : null}
-          <Button onPress={onSubmit}>登入</Button>
+          <Button onPress={onSubmit} loading={loading}>登入</Button>
         </View>
       </Card>
 

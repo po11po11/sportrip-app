@@ -12,7 +12,7 @@ type EmptyStateProps = {
 
 export function EmptyState({ icon: Icon, title, description, actionLabel, onAction }: EmptyStateProps) {
   return (
-    <View className="items-center justify-center gap-4 rounded-md border border-dashed border-grey-300 bg-white p-6 dark:border-grey-700 dark:bg-grey-900">
+    <View className="items-center justify-center gap-4 rounded-xl border border-dashed border-grey-300 bg-white p-6 dark:border-grey-700 dark:bg-grey-900">
       <View className="h-14 w-14 items-center justify-center rounded-full bg-grey-100 dark:bg-grey-800">
         <Icon size={24} color="#737373" />
       </View>

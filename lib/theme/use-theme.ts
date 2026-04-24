@@ -17,10 +17,7 @@ export function useAppTheme() {
       textMuted: isDark ? colors.grey[400] : colors.grey[600],
       accent: isDark ? colors.accent[500] : colors.accent[600],
       accentSoft: isDark ? colors.accent[900] : colors.accent[100],
-      success: colors.success,
-      warning: colors.warning,
-      error: colors.error,
-      info: colors.info,
+      subdued: isDark ? colors.grey[700] : colors.grey[300],
     },
   }
 }

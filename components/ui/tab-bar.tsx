@@ -21,6 +21,9 @@ export function TabBar({ tabs, activeTab, onTabChange }: TabBarProps) {
           <Pressable
             key={tab.key}
             onPress={() => onTabChange(tab.key)}
+            accessibilityRole="tab"
+            accessibilityLabel={tab.label}
+            accessibilityState={{ selected: active }}
             className={cn(
               'rounded-full px-4 py-2',
               active ? 'bg-accent-600' : 'bg-grey-100 dark:bg-grey-900'

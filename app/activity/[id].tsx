@@ -41,7 +41,7 @@ export default function ActivityDetailScreen() {
 
       <Card>
         <View className="gap-4">
-          <Badge label={activity.status === 'open' ? '報名中' : activity.status} variant={activity.status === 'open' ? 'success' : 'default'} />
+          <Badge label={activity.status === 'open' ? '報名中' : activity.status} variant={activity.status === 'open' ? 'accent' : 'grey'} />
           <Text className="text-3xl font-semibold text-black dark:text-white">{activity.title}</Text>
           <Text className="text-base text-grey-500 dark:text-grey-400">{activity.guild?.name} • {activity.guild?.location}</Text>
           <View className="gap-3">

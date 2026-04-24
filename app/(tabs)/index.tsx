@@ -21,10 +21,10 @@ export default function ExploreScreen() {
         title="Sportrip"
         rightSlot={
           <>
-            <Pressable className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
+            <Pressable onPress={() => router.push('/search')} accessibilityRole="button" accessibilityLabel="搜尋" className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
               <Search size={20} color="#171717" />
             </Pressable>
-            <Pressable className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
+            <Pressable onPress={() => router.push('/search')} accessibilityRole="button" accessibilityLabel="搜尋" className="h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-grey-900">
               <Bell size={20} color="#171717" />
             </Pressable>
           </>
