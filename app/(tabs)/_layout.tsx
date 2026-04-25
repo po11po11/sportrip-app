@@ -1,5 +1,7 @@
+import { Platform } from 'react-native'
 import { Tabs } from 'expo-router'
 import { Compass, Users, CalendarDays, Wallet, User } from 'lucide-react-native'
+import { useResponsive } from '@/lib/hooks/use-responsive'
 
 const tabs = {
   index: { title: '探索', icon: Compass },
@@ -10,6 +12,8 @@ const tabs = {
 } as const
 
 export default function TabsLayout() {
+  const { showWebShell } = useResponsive()
+
   return (
     <Tabs
       screenOptions={({ route }) => {
@@ -18,13 +22,17 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarActiveTintColor: '#EA580C',
           tabBarInactiveTintColor: '#737373',
-          tabBarStyle: {
-            height: 72,
-            paddingTop: 8,
-            paddingBottom: 8,
-            borderTopColor: '#E5E5E5',
-            backgroundColor: '#FFFFFF',
-          },
+          tabBarStyle: showWebShell && Platform.OS === 'web'
+            ? {
+                display: 'none',
+              }
+            : {
+                height: 72,
+                paddingTop: 8,
+                paddingBottom: 8,
+                borderTopColor: '#E5E5E5',
+                backgroundColor: '#FFFFFF',
+              },
           tabBarLabelStyle: {
             fontSize: 12,
             fontWeight: '600',
