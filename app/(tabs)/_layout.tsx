@@ -1,5 +1,4 @@
-import { Platform } from 'react-native'
-import { Tabs } from 'expo-router'
+import { Slot, Tabs } from 'expo-router'
 import { Compass, Users, CalendarDays, Wallet, User } from 'lucide-react-native'
 import { useResponsive } from '@/lib/hooks/use-responsive'
 
@@ -12,7 +11,11 @@ const tabs = {
 } as const
 
 export default function TabsLayout() {
-  const { showWebShell } = useResponsive()
+  const { showWebShell, isWeb } = useResponsive()
+
+  if (isWeb && showWebShell) {
+    return <Slot />
+  }
 
   return (
     <Tabs
@@ -22,17 +25,13 @@ export default function TabsLayout() {
           headerShown: false,
           tabBarActiveTintColor: '#EA580C',
           tabBarInactiveTintColor: '#737373',
-          tabBarStyle: showWebShell && Platform.OS === 'web'
-            ? {
-                display: 'none',
-              }
-            : {
-                height: 72,
-                paddingTop: 8,
-                paddingBottom: 8,
-                borderTopColor: '#E5E5E5',
-                backgroundColor: '#FFFFFF',
-              },
+          tabBarStyle: {
+            height: 72,
+            paddingTop: 8,
+            paddingBottom: 8,
+            borderTopColor: '#E5E5E5',
+            backgroundColor: '#FFFFFF',
+          },
           tabBarLabelStyle: {
             fontSize: 12,
             fontWeight: '600',
